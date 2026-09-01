@@ -1,0 +1,6 @@
+node_modules/
+build/
+dist/
+.env
+PLAN.MD
+Project3.docx.pdf
