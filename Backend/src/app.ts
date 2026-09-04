@@ -3,11 +3,11 @@ import express from "express";
 import expressFileUpload from "express-fileupload";
 import path from "path";
 import { saver } from "smart-saver";
-import { dataController } from "./controllers/data-controller";
+import { userController } from "./controllers/user-controller";
 import { errorMiddleware } from "./middleware/error-middleware";
+import { loggerMiddleware } from "./middleware/logger-middleware";
 import { securityMiddleware } from "./middleware/security-middleware";
 import { appConfig } from "./utils/app-config";
-import { loggerMiddleware } from "./middleware/logger-middleware";
 
 class App {
 
@@ -31,7 +31,7 @@ class App {
         server.use(securityMiddleware.preventXss);
 
         // Register controllers:
-        server.use(dataController.router);
+        server.use(userController.router);
 
         // Register "after" middleware:
         server.use(errorMiddleware.routeNotFound);

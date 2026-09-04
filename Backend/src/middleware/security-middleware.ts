@@ -69,7 +69,7 @@ class SecurityMiddleware {
         // General rate-limit:
         server.use(expressRateLimit({
             windowMs: 1000, // Time window in milliseconds.
-            limit: 5, // How many requests allowed in that window.
+            limit: 20, // How many requests allowed in that window.
         }));
 
     }

@@ -3,16 +3,21 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "start": "nodemon --exec tsx src/app.ts --quiet"
+        "start": "nodemon --exec tsx src/app.ts --quiet",
+        "test": "mocha"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@types/chai": "^5.2.3",
         "@types/cors": "^2.8.19",
         "@types/express": "^5.0.6",
         "@types/express-fileupload": "^1.5.1",
         "@types/jsonwebtoken": "^9.0.10",
+        "@types/mocha": "^10.0.10",
         "@types/node": "^26.1.1",
+        "chai": "^6.2.2",
+        "mocha": "^12.0.0",
         "nodemon": "^3.1.14",
         "tsx": "^4.23.1"
     },
