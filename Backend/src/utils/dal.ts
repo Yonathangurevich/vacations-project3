@@ -16,7 +16,7 @@ class Dal {
     private readonly connection = mysql2.createPool(this.options);
 
     // Execute SQL:
-    public execute(sql: string, values?: (string | number | boolean | null)[]): Promise<QueryResult> {
+    public execute(sql: string, values?: (string | number | boolean | null | Date)[]): Promise<QueryResult> {
 
         // Promisify:
         return new Promise<QueryResult>((resolve, reject) => {

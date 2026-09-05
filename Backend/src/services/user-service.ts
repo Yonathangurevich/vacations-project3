@@ -31,7 +31,7 @@ class UserService {
 
         // Execute: 
         const info = await dal.execute(sql, values) as OkPacketParams;
-        user.id = info.insertId!;
+        user.userId = info.insertId!;
 
         // Generate token:
         const token = cyber.generateToken(user);

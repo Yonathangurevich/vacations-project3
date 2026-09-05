@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import colors from "colors";
+import colors from "colors/safe";
 
 class LoggerMiddleware {
 

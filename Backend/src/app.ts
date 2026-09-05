@@ -8,6 +8,7 @@ import { errorMiddleware } from "./middleware/error-middleware";
 import { loggerMiddleware } from "./middleware/logger-middleware";
 import { securityMiddleware } from "./middleware/security-middleware";
 import { appConfig } from "./utils/app-config";
+import { vacationsController } from "./controllers/vacations-controller";
 
 class App {
 
@@ -32,6 +33,7 @@ class App {
 
         // Register controllers:
         server.use(userController.router);
+        server.use(vacationsController.router);
 
         // Register "after" middleware:
         server.use(errorMiddleware.routeNotFound);

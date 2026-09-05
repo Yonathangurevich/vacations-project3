@@ -45,7 +45,7 @@ describe("UserService", () => {
         const payload = decodePayload(token);
         expect(payload.user.roleId).to.equal(Role.User);
         expect(payload.user.email).to.equal(testEmail);
-        expect(payload.user.id).to.be.a("number");
+        expect(payload.user.userId).to.be.a("number");
         expect(payload.user.password).to.be.undefined;
     });
 

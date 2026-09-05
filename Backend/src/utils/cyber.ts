@@ -1,8 +1,9 @@
 import { UserModel } from "../models/user-model";
 import jwt, { SignOptions } from "jsonwebtoken";
 import { appConfig } from "./app-config";
-import { Role } from "../models/enums";
+import { Role, StatusCode } from "../models/enums";
 import crypto from "crypto";
+import { ClientError } from "../models/client-error";
 
 class Cyber {
 
@@ -86,6 +87,19 @@ class Cyber {
         catch (err: any) {
             return false; // Token not legal.
         }
+    }
+
+    public decodeJwtTokenUserId(authorization: string | undefined): number {
+        
+        // get the token
+        const token = authorization?.substring(7)!;
+
+        // decode the token
+        const payload = jwt.decode(token) as { user: UserModel };
+        
+        // return userId
+        return payload.user.userId;
+
     }
 
 }
