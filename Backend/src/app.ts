@@ -9,6 +9,7 @@ import { loggerMiddleware } from "./middleware/logger-middleware";
 import { securityMiddleware } from "./middleware/security-middleware";
 import { appConfig } from "./utils/app-config";
 import { vacationsController } from "./controllers/vacations-controller";
+import { reportController } from "./controllers/report-controller";
 
 class App {
 
@@ -34,6 +35,7 @@ class App {
         // Register controllers:
         server.use(userController.router);
         server.use(vacationsController.router);
+        server.use(reportController.router);
 
         // Register "after" middleware:
         server.use(errorMiddleware.routeNotFound);
@@ -48,4 +50,3 @@ class App {
 const app = new App();
 app.start();
 
-// taskkill /F /IM node.exe

@@ -102,6 +102,20 @@ class Cyber {
 
     }
 
+    public decodeJwtTokenRoleId(authorization: string | undefined): number {
+
+        // get the token
+        const token = authorization?.substring(7)!;
+
+        // decode the token
+        const payload = jwt.decode(token) as { user: UserModel };
+
+        // return roleId
+        return payload.user.roleId;
+
+    }
+
+
 }
 
 export const cyber = new Cyber();

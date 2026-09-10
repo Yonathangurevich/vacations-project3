@@ -2,9 +2,10 @@ import z from "zod";
 import { StatusCode } from "./enums";
 import { ClientError } from "./client-error";
 import { UploadedFile } from "express-fileupload";
-import { formatDate } from "../utils/foramat-date";
+import { formatDate } from "../utils/format-date";
 
-export type VacationsResponseModel = {
+// from vacation table
+export type VacationsModel = {
     vacationId: number; 
     destination: string; 
     description: string; 
@@ -12,8 +13,10 @@ export type VacationsResponseModel = {
     endDate: string; 
     price: number; 
     imageName: string;
+    imageUrl: string;
 }
 
+// model for returning like count.
 export type VacationsLikesCountResponseModel = {
     vacationId: number; 
     destination: string; 
@@ -23,9 +26,11 @@ export type VacationsLikesCountResponseModel = {
     price: number; 
     imageName: string; 
     likesCount: number; 
-    isLiked: boolean; 
+    isLiked: boolean;
+    imageUrl: string;
 }
 
+// what we get from the join query that returns like count.
 export type VacationsLikesCountModel = {
     vacationId: number; 
     destination: string; 

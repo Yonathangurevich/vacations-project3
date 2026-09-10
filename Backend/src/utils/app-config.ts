@@ -18,6 +18,8 @@ class AppConfig {
     public readonly hashSalt = process.env.HASH_SALT!;
     public readonly recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY!;
 
+    public readonly vacationImagesBaseUrl = process.env.VACATION_IMAGES_BASE_URL!;
+
 }
 
 export const appConfig = new AppConfig();

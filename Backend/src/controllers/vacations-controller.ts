@@ -3,7 +3,9 @@ import { securityMiddleware } from "../middleware/security-middleware";
 import { vacationsService } from "../services/vacations-service";
 import { cyber } from "../utils/cyber";
 import { VacationsFormModel } from "../models/vacations-model";
-import { StatusCode } from "../models/enums";
+import { Role, StatusCode } from "../models/enums";
+import { ClientError } from "../models/client-error";
+import { saver } from "smart-saver";
 
 class VacationsController {
 
@@ -12,13 +14,17 @@ class VacationsController {
 
     // Constructor - register routes:
     public constructor() {
-       this.router.get("/api/vacations", securityMiddleware.verifyLoggedIn, this.getVacationsByUserId);
-       this.router.get("/api/vacations/:vacationId", securityMiddleware.verifyLoggedIn, this.getOneVacation);
-       this.router.post("/api/vacations", securityMiddleware.verifyAdmin, this.addVacation);
-       this.router.put("/api/vacations/:vacationId", securityMiddleware.verifyAdmin, this.updateVacation);
-       this.router.delete("/api/vacations/:vacationId", securityMiddleware.verifyAdmin, this.deleteVacation);
+        this.router.get("/api/vacations", securityMiddleware.verifyLoggedIn, this.getVacationsByUserId);
+        this.router.get("/api/vacations/:vacationId", securityMiddleware.verifyLoggedIn, this.getOneVacation);
+        this.router.post("/api/vacations", securityMiddleware.verifyAdmin, this.addVacation);
+        this.router.put("/api/vacations/:vacationId", securityMiddleware.verifyAdmin, this.updateVacation);
+        this.router.delete("/api/vacations/:vacationId", securityMiddleware.verifyAdmin, this.deleteVacation);
+        this.router.post("/api/vacations/:vacationId/like", securityMiddleware.verifyLoggedIn, this.likeVacation);
+        this.router.delete("/api/vacations/:vacationId/like", securityMiddleware.verifyLoggedIn, this.unlikeVacation);
+        this.router.get("/api/vacations/images/:imageName", securityMiddleware.verifyLoggedIn, this.getImage);
     }
 
+    // get all vacation
     private async getVacationsByUserId(request: Request, response: Response): Promise<void> {
         
         // get jwt token
@@ -28,19 +34,20 @@ class VacationsController {
         const userId = cyber.decodeJwtTokenUserId(authorization);
         
         // get one vacation
-        const vacations = await vacationsService.getVacationsByUserId(userId);
+        const vacations = await vacationsService.getAllVacations(userId);
         
         // send response
         response.json(vacations);
     }
 
+    // get one vacation
     private async getOneVacation(request: Request, response: Response): Promise<void> {
         
         // get the vacationId
-        const userId = +request.params.vacationId;
+        const vacationId = +request.params.vacationId;
         
         // get one vacation
-        const vacations = await vacationsService.getOneVacation(userId);
+        const vacations = await vacationsService.getOneVacation(vacationId);
         
         // send response
         response.json(vacations);
@@ -91,6 +98,61 @@ class VacationsController {
         // send response
         response.sendStatus(StatusCode.NoContent);
     }
+
+        private async likeVacation(request: Request, response: Response): Promise<void> {
+
+        // get jwt token
+        const authorization = request.headers.authorization;
+
+        // admins are not allowed to like vacations:
+        if (cyber.decodeJwtTokenRoleId(authorization) === Role.Admin) {
+            throw new ClientError(StatusCode.Forbidden, "Admins can't like vacations");
+        }
+
+        // get the userId
+        const userId = cyber.decodeJwtTokenUserId(authorization);
+
+        // get the vacationId
+        const vacationId = +request.params.vacationId;
+
+        // like the vacation
+        await vacationsService.likeVacation(vacationId, userId);
+
+        // send response
+        response.sendStatus(StatusCode.NoContent);
+    }
+
+    private async unlikeVacation(request: Request, response: Response): Promise<void> {
+
+        // get jwt token
+        const authorization = request.headers.authorization;
+
+        // get the userId
+        const userId = cyber.decodeJwtTokenUserId(authorization);
+
+        // get the vacationId
+        const vacationId = +request.params.vacationId;
+
+        // unlike the vacation
+        await vacationsService.unlikeVacation(vacationId, userId);
+
+        // send response
+        response.sendStatus(StatusCode.NoContent);
+    }
+
+    private async getImage(request: Request, response: Response): Promise<void> {
+
+        // get image name from params:
+        const imageName = request.params.imageName.toString();
+        
+        // get image file path:
+        const filePath = saver.getFilePath(imageName);
+
+        // send response:
+        response.sendFile(filePath);
+
+    }
+
 
 }
 
