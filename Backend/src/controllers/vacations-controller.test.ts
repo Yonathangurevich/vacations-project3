@@ -329,11 +329,11 @@ describe("VacationsController", () => {
     // ---------------------------------------------------------------
     // Likes - the core user action in the whole spec.
     // ---------------------------------------------------------------
-    it("POST and DELETE /api/vacations/:id/like add and remove exactly one like", async () => {
+    it("POST and DELETE /api/vacations/like/:id add and remove exactly one like", async () => {
 
         const created = await createVacation();
 
-        const liked = await fetch(`${baseUrl}/api/vacations/${created.vacationId}/like`, {
+        const liked = await fetch(`${baseUrl}/api/vacations/like/${created.vacationId}`, {
             method: "POST",
             headers: { Authorization: `Bearer ${userToken}` }
         });
@@ -342,7 +342,7 @@ describe("VacationsController", () => {
         let rows = await dal.execute("select * from likes where vacationId = ?", [created.vacationId]) as any[];
         expect(rows.length).to.equal(1);
 
-        const unliked = await fetch(`${baseUrl}/api/vacations/${created.vacationId}/like`, {
+        const unliked = await fetch(`${baseUrl}/api/vacations/like/${created.vacationId}`, {
             method: "DELETE",
             headers: { Authorization: `Bearer ${userToken}` }
         });
@@ -352,10 +352,10 @@ describe("VacationsController", () => {
         expect(rows.length).to.equal(0);
     });
 
-    it("POST /api/vacations/:id/like refuses a second like from the same user", async () => {
+    it("POST /api/vacations/like/:id refuses a second like from the same user", async () => {
 
         const created = await createVacation();
-        const url = `${baseUrl}/api/vacations/${created.vacationId}/like`;
+        const url = `${baseUrl}/api/vacations/like/${created.vacationId}`;
 
         await fetch(url, { method: "POST", headers: { Authorization: `Bearer ${userToken}` } });
         const second = await fetch(url, { method: "POST", headers: { Authorization: `Bearer ${userToken}` } });
@@ -366,11 +366,11 @@ describe("VacationsController", () => {
         expect(rows.length).to.equal(1);
     });
 
-    it("POST /api/vacations/:id/like refuses an admin, per the spec", async () => {
+    it("POST /api/vacations/like/:id refuses an admin, per the spec", async () => {
 
         const created = await createVacation();
 
-        const response = await fetch(`${baseUrl}/api/vacations/${created.vacationId}/like`, {
+        const response = await fetch(`${baseUrl}/api/vacations/like/${created.vacationId}`, {
             method: "POST",
             headers: { Authorization: `Bearer ${adminToken}` }
         });

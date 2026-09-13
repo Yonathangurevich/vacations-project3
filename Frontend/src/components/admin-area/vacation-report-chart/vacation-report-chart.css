@@ -1,0 +1,7 @@
+/* maintainAspectRatio is false, so the canvas fills this box -
+   without an explicit height it would collapse to nothing: */
+.VacationReportChart {
+    position: relative;
+    width: 100%;
+    height: 420px;
+}

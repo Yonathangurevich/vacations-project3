@@ -19,9 +19,9 @@ class VacationsController {
         this.router.post("/api/vacations", securityMiddleware.verifyAdmin, this.addVacation);
         this.router.put("/api/vacations/:vacationId", securityMiddleware.verifyAdmin, this.updateVacation);
         this.router.delete("/api/vacations/:vacationId", securityMiddleware.verifyAdmin, this.deleteVacation);
-        this.router.post("/api/vacations/:vacationId/like", securityMiddleware.verifyLoggedIn, this.likeVacation);
-        this.router.delete("/api/vacations/:vacationId/like", securityMiddleware.verifyLoggedIn, this.unlikeVacation);
-        this.router.get("/api/vacations/images/:imageName", securityMiddleware.verifyLoggedIn, this.getImage);
+        this.router.post("/api/vacations/like/:vacationId", securityMiddleware.verifyLoggedIn, this.likeVacation);
+        this.router.delete("/api/vacations/like/:vacationId", securityMiddleware.verifyLoggedIn, this.unlikeVacation);
+        this.router.get("/api/vacations/images/:imageName", this.getImage);
     }
 
     // get all vacation

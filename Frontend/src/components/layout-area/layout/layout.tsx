@@ -1,3 +1,4 @@
+import { AuthMenu } from "../../user-area/auth-menu/auth-menu";
 import { Copyrights } from "../copyrights/copyrights";
 import { Header } from "../header/header";
 import { Menu } from "../menu/menu";
@@ -10,6 +11,7 @@ export function Layout() {
 
 			<header>
                 <Header />
+                <AuthMenu />
             </header>
 
             <nav>

@@ -1,15 +1,17 @@
-import { ProductModel } from "../models/data-model";
+import { VacationFormModel } from "../models/vacation-model";
 
 class FormUtil {
 
-    // Convert product into FormData, so we could send also the image:
-    public toFormData(product: ProductModel): FormData {
-        const productFormData = new FormData();
-        productFormData.append("name", product.name);
-        productFormData.append("price", product.price.toString());
-        productFormData.append("stock", product.stock.toString());
-        productFormData.append("image", product.image);
-        return productFormData;
+    // Convert vacation into FormData, so we could send also the image:
+    public toFormData(vacation: VacationFormModel): FormData {
+        const vacationFormData = new FormData();
+        vacationFormData.append("destination", vacation.destination);
+        vacationFormData.append("description", vacation.description);
+        vacationFormData.append("startDate", vacation.startDate);
+        vacationFormData.append("endDate", vacation.endDate);
+        vacationFormData.append("price", String(vacation.price));
+        vacationFormData.append("image", vacation.image[0]);
+        return vacationFormData;
     }
 
 }
