@@ -21,7 +21,7 @@ export function SignUp() {
         try {
             await userService.register(user);
             notify.success(`Welcome ${user.firstName}`);
-            navigate("/home");
+            navigate("/vacations");
         }
         catch(err: any) {
             notify.error(err);

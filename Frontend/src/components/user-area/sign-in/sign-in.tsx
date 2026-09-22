@@ -21,7 +21,7 @@ export function SignIn() {
         try {
             await userService.login(credential);
             notify.success("welcome back");
-            navigate("/home");
+            navigate("/vacations");
         }
         catch(err: any) {
             notify.error(err);

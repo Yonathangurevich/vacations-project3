@@ -28,7 +28,7 @@ class ReportController {
         // response with csv
         response
             .setHeader("Content-Type", "text/csv")
-            .setHeader("Content-Disposition", 'attachment; filename="users.csv"')
+            .setHeader("Content-Disposition", 'attachment; filename="vacations-report.csv"')
             .send(csv);
     }
 

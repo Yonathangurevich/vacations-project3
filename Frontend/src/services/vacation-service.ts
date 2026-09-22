@@ -1,5 +1,5 @@
 import axios from "axios";
-import { VacationFormModel, VacationLikesCountModel, VacationModel } from "../models/vacation-model";
+import { VacationCountModel, VacationFormModel, VacationLikesCountModel, VacationModel } from "../models/vacation-model";
 import { appConfig } from "../utils/app-config";
 import { formUtil } from "../utils/form-util";
 
@@ -42,6 +42,13 @@ class VacationService {
     // unlike existing vacation
     public async unlikeVacation(vacationId: number): Promise<void> {
         await axios.delete(`${appConfig.vacationsUrl}/like/${vacationId}`);
+    }
+
+    // get number of vacations count:
+    public async getVacationsCount(): Promise<number> {
+        const response = await axios.get<VacationCountModel>(appConfig.vacationsCountUrl);
+        const count = response.data;
+        return count.vacationCount;
     }
     
 }

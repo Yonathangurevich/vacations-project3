@@ -20,6 +20,12 @@ class AppConfig {
 
     public readonly vacationImagesBaseUrl = process.env.VACATION_IMAGES_BASE_URL!;
 
+    public readonly openaiApiKey = process.env.OPENAI_API_KEY!;
+    public readonly openaiModel = "gpt-5";
+    public readonly openaiUrl = "https://api.openai.com/v1/chat/completions";
+
+    public readonly mcpServerUrl = process.env.MCP_SERVER_URL!;
+
 }
 
 export const appConfig = new AppConfig();

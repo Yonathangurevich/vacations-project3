@@ -4,8 +4,8 @@ import { useTokenExpiration } from "../../../hooks/use-token-expiration";
 import { VacationLikesCountModel } from "../../../models/vacation-model";
 import { vacationService } from "../../../services/vacation-service";
 import { notify } from "../../../utils/notify";
-import { VacationCard } from "../../vacations-area/vacation-card/vacation-card";
-import "./home.css";
+import { VacationCard } from "../vacation-card/vacation-card";
+import "./vacations.css";
 import { Roles } from "../../../models/enums";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../redux/app-state";
@@ -13,7 +13,7 @@ import { UserModel } from "../../../models/user-model";
 
 type VacationFilter = "all" | "liked" | "active" | "notStarted";
 
-export function Home() {
+export function Vacations() {
 
     // Check token expiration:
     const token = localStorage.getItem("token");
@@ -42,21 +42,11 @@ export function Home() {
     const isAdmin = user?.roleId === Roles.Admin;
 
     useEffect(() => {
-
         vacationService.getAllVacations()
-            .then(vacations => {
-
-                // Sort vacations by start date:
-                vacations.sort((a, b) =>
-                    a.startDate.localeCompare(b.startDate)
-                );
-
-                setVacations(vacations);
-            })
-            .catch(err => notify.error(err));
-
+            .then(vacations => setVacations(vacations))
+            .catch(err => notify.error(err));          
     }, []);
-
+        
     // Get today's date:
     const today = new Date().toLocaleDateString("sv-SE");
 
@@ -86,6 +76,7 @@ export function Home() {
         filteredVacations.length / vacationsPerPage
     );
 
+    // the starting index for displaying vacations:
     const startIndex = (currentPage - 1) * vacationsPerPage;
     
     // Displayed vacations per page:
@@ -107,6 +98,7 @@ export function Home() {
         likesCount: number
     ): void {
 
+        // will reset the likes and likes count:
         setVacations(vacations =>
             vacations.map(v =>
                 v.vacationId === vacationId
@@ -134,7 +126,7 @@ export function Home() {
                 </div>
             }
 
-			 <div className="vacation-filters">
+			<div className="vacation-filters">
 
                 <button onClick={() => changeFilter("all")}>
                     All Vacations
@@ -153,7 +145,6 @@ export function Home() {
                 </button>
 
             </div>
-
 
             <div className="vacations-container">
 

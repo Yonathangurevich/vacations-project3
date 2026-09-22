@@ -30,3 +30,7 @@ export type VacationModel = {
     imageName: string;
     imageUrl: string;
 }
+
+export type VacationCountModel = {
+    vacationCount: number;
+}

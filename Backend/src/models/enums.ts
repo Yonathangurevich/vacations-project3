@@ -15,7 +15,8 @@ export enum StatusCode {
     // TooManyRequests = 429,
 
     // Server Errors:
-    InternalServerError = 500
+    InternalServerError = 500,
+    BadGateway = 502
     
 }
 

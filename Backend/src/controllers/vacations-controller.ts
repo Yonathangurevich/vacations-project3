@@ -14,7 +14,7 @@ class VacationsController {
 
     // Constructor - register routes:
     public constructor() {
-        this.router.get("/api/vacations", securityMiddleware.verifyLoggedIn, this.getVacationsByUserId);
+        this.router.get("/api/vacations", securityMiddleware.verifyLoggedIn, this.getAllVacationsForUser);
         this.router.get("/api/vacations/:vacationId", securityMiddleware.verifyLoggedIn, this.getOneVacation);
         this.router.post("/api/vacations", securityMiddleware.verifyAdmin, this.addVacation);
         this.router.put("/api/vacations/:vacationId", securityMiddleware.verifyAdmin, this.updateVacation);
@@ -25,7 +25,7 @@ class VacationsController {
     }
 
     // get all vacation
-    private async getVacationsByUserId(request: Request, response: Response): Promise<void> {
+    private async getAllVacationsForUser(request: Request, response: Response): Promise<void> {
         
         // get jwt token
         const authorization = request.headers.authorization;
@@ -34,7 +34,7 @@ class VacationsController {
         const userId = cyber.decodeJwtTokenUserId(authorization);
         
         // get one vacation
-        const vacations = await vacationsService.getAllVacations(userId);
+        const vacations = await vacationsService.getAllVacationsForUser(userId);
         
         // send response
         response.json(vacations);

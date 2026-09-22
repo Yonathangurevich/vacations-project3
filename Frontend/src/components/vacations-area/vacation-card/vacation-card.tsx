@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Roles } from "../../../models/enums";
+import { UserModel } from "../../../models/user-model";
 import { VacationLikesCountModel } from "../../../models/vacation-model";
+import { AppState } from "../../../redux/app-state";
 import { vacationService } from "../../../services/vacation-service";
 import { notify } from "../../../utils/notify";
 import "./vacation-card.css";
-import { AppState } from "../../../redux/app-state";
-import { UserModel } from "../../../models/user-model";
-import { Roles } from "../../../models/enums";
-import { useNavigate } from "react-router-dom";
-import { useAdmin } from "../../../hooks/use-admin";
 
 
 type VacationCardProps = {
@@ -26,8 +25,6 @@ type VacationCardProps = {
 
 export function VacationCard(props: VacationCardProps) {
 
-    useAdmin();
-
     const user = useSelector<AppState, UserModel>(state => state.user);
     const isAdmin = user?.roleId === Roles.Admin;
 
@@ -39,7 +36,7 @@ export function VacationCard(props: VacationCardProps) {
         
         try {
             await vacationService.deleteVacation(props.vacation.vacationId);
-            notify.success("Vacation was delete");
+            notify.success("Vacation has been deleted");
             props.onDeleted(props.vacation.vacationId);
         }
         catch(err: any) {

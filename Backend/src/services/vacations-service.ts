@@ -2,7 +2,8 @@ import { OkPacketParams } from "mysql2";
 import { saver } from "smart-saver";
 import { ClientError } from "../models/client-error";
 import { StatusCode } from "../models/enums";
-import { VacationsFormModel, VacationsLikesCountModel, VacationsLikesCountResponseModel, VacationsModel } from "../models/vacations-model";
+import { VacationCountModel, VacationPriceStatisticsModel } from "../models/vacation-mcp-model";
+import { VacationsDbRow, VacationsFormModel, VacationWithLikes, VacationsModel, VacationSummaryModel, VacationsLikesCountModel } from "../models/vacations-model";
 import { appConfig } from "../utils/app-config";
 import { dal } from "../utils/dal";
 import { formatDate } from "../utils/format-date";
@@ -10,7 +11,7 @@ import { formatDate } from "../utils/format-date";
 class VacationsService {
 
     // get vacations by userId
-    public async getAllVacations(userId: number): Promise<VacationsLikesCountResponseModel[]> {
+    public async getAllVacationsForUser(userId: number): Promise<VacationWithLikes[]> {
         
         // sql:
         const sql = `SELECT 
@@ -22,20 +23,19 @@ class VacationsService {
                         v.price,
                         v.imageName,
                         COUNT(l.userId) AS likesCount,
-                        COUNT(CASE WHEN l.userId = ? THEN 1 END) > 0 AS isLiked,
-                        concat(?, imageName) as imageUrl
+                        COUNT(CASE WHEN l.userId = ? THEN 1 END) > 0 AS isLiked
                     FROM vacations AS v
                     LEFT JOIN likes AS l
                         ON v.vacationId = l.vacationId
                     GROUP BY v.vacationId
                     ORDER BY v.startDate ASC`;
-        const values = [userId, appConfig.vacationImagesBaseUrl];
+        const values = [userId];
 
         // execute sql
         const dbVacations = await dal.execute(sql, values) as VacationsLikesCountModel[];
 
         // turn 0's and 1's to true and false, price to number and split dates.
-        const vacations: VacationsLikesCountResponseModel[] = dbVacations.map(v => ({
+        const vacations: VacationWithLikes[] = dbVacations.map(v => ({
             ...v,
             price: +v.price,
             startDate: formatDate.format(v.startDate),
@@ -73,8 +73,8 @@ class VacationsService {
     public async getOneVacation(vacationId: number): Promise<VacationsModel> {
         
         // sql:
-        const sql = "select *, concat(?, imageName) as imageUrl from vacations where vacationId = ?";
-        const values = [appConfig.vacationImagesBaseUrl, vacationId];
+        const sql = "select * from vacations where vacationId = ?";
+        const values = [vacationId];
         
         // execution:
         const vacations = await dal.execute(sql, values) as VacationsLikesCountModel[];
@@ -179,9 +179,57 @@ class VacationsService {
         if (info.affectedRows === 0) {
             throw new ClientError(StatusCode.NotFound, "This vacation is not liked by the user");
         }
-
     }
 
+    // get number of active vacations
+    public async getActiveVacationCount(): Promise<VacationCountModel> {
+        const sql = "select count(*) as vacationCount from vacations where startDate <= curdate() and endDate >= curdate()";
+        const dbCount = await dal.execute(sql) as VacationCountModel[];
+        const count = dbCount[0];
+        return count;
+    }
+
+    // get average, max and min prices for all vacations
+    public async getVacationPriceStatistics(): Promise<VacationPriceStatisticsModel> {
+        
+        // sql:
+        const sql = `
+            select 
+                avg(price) as averagePrice, 
+                min(price) as minPrice, 
+                max(price) as maxPrice, 
+                count(*) as vacationCount
+            from vacations
+        `;
+
+        // get all prices:
+        const dbVacationPriceStatistics = await dal.execute(sql) as VacationPriceStatisticsModel[];
+        
+        // return prices:
+        const vacationPriceStatistics = dbVacationPriceStatistics[0];
+        return vacationPriceStatistics;
+    }
+
+    // get all vacations:
+    public async getAllVacations(): Promise<VacationSummaryModel[]> {
+
+        // sql:
+        const sql = "select destination, startDate, endDate, price from vacations order by startDate asc";
+
+        // execute:
+        const dbVacations = await dal.execute(sql) as VacationsDbRow[];
+
+        // price to number and dates to YYYY-MM-DD format:
+        const vacations: VacationSummaryModel[] = dbVacations.map(v => ({
+            destination: v.destination,
+            startDate: formatDate.format(v.startDate),
+            endDate: formatDate.format(v.endDate),
+            price: +v.price
+        }));
+
+        // return vacations:
+        return vacations;
+    }
 }
 export const vacationsService = new VacationsService();
 

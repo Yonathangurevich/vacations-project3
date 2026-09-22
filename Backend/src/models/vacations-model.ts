@@ -17,7 +17,7 @@ export type VacationsModel = {
 }
 
 // model for returning like count.
-export type VacationsLikesCountResponseModel = {
+export type VacationWithLikes = {
     vacationId: number; 
     destination: string; 
     description: string; 
@@ -30,7 +30,26 @@ export type VacationsLikesCountResponseModel = {
     imageUrl: string;
 }
 
-// what we get from the join query that returns like count.
+// exactly how vacations table:
+export type VacationsDbRow = {
+    vacationId: number;
+    destination: string;
+    description: string;
+    startDate: Date;
+    endDate: Date;
+    price: string;
+    imageName: string;
+}
+
+// what the MCP tools hand to the model:
+export type VacationSummaryModel = {
+    destination: string;
+    startDate: string;
+    endDate: string;
+    price: number;
+}
+
+// what returned from the join query that returns like count.
 export type VacationsLikesCountModel = {
     vacationId: number; 
     destination: string; 
@@ -52,23 +71,22 @@ const BaseVacationSchema = z.object({
     price: z.number().min(0).max(10_000),
     imageName: z.string().min(1).max(255).optional(),
     image: z.custom<UploadedFile>().optional(),
-    imageUrl: z.url().optional()
 });
 
-// check if endDate bigger or equel to startEnd
+// check if endDate bigger or equal to startEnd
 const endAfterStart = (data: IVacationsFormModel) => data.endDate >= data.startDate;
 const endAfterStartMessage = { message: "End date must not be before start date", path: ["endDate"] };
 
 // Add vacation refine validation
 const AddVacationSchema = BaseVacationSchema
     
-    // check if startDate bigger or equel to corrent date
+    // check if startDate bigger or equal to correct date
     .refine(data => data.startDate >= formatDate.format(new Date()), {
         message: "Start date cannot be in the past",
         path: ["startDate"]
     })
 
-    // check if endDate bigger or equel to startEnd
+    // check if endDate bigger or equal to startEnd
     .refine(endAfterStart, endAfterStartMessage)
     
     // check if image was sended
@@ -80,7 +98,7 @@ const AddVacationSchema = BaseVacationSchema
 // Edit vacation refine validation
 const EditVacationSchema = BaseVacationSchema
 
-    // check if endDate bigger or equel to startEnd
+    // check if endDate bigger or equal to startEnd
     .refine(endAfterStart, endAfterStartMessage);
 
 // Vacation Interface:
@@ -97,7 +115,6 @@ export class VacationsFormModel implements IVacationsFormModel {
     public price: number;
     public imageName: string;
     public image: UploadedFile;
-    public imageUrl: string;
 
     public constructor(vacation: VacationsFormModel) {
         this.vacationId = vacation.vacationId;
@@ -108,7 +125,6 @@ export class VacationsFormModel implements IVacationsFormModel {
         this.price = +vacation.price;
         this.imageName = vacation.imageName;
         this.image = vacation.image;
-        this.imageUrl = vacation.imageUrl;
     }
 
     public validate(isAdd: boolean): void {

@@ -13,9 +13,11 @@ export function Menu() {
     return (
         <div className="Menu">
 
-            <NavLink to="/home">Home</NavLink>
+            <NavLink to="/vacations">Home</NavLink>
 
             {isAdmin && <NavLink to="/reports">Reports</NavLink>}
+            {user && <NavLink to="/recommendation">AI Recommendation</NavLink>}
+            {user && <NavLink to="/mcp">MCP</NavLink>}
             
             <NavLink to="/about">About</NavLink>
 
