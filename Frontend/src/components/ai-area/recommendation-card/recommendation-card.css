@@ -1,3 +1,75 @@
 .RecommendationCard {
-	
+    margin-bottom: var(--gap-md);
+    padding: var(--gap-md);
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+
+    /* An indigo rule down the left edge, like a margin line on paper: */
+    border-left: 3px solid var(--ai);
+    box-shadow: var(--shadow);
 }
+
+/* The emoji and the section title sit on one line: */
+.RecommendationCard h4 {
+    display: inline;
+    margin: 0;
+    font-size: 16px;
+    letter-spacing: 0.06em;
+    color: var(--ai-deep);
+}
+
+.RecommendationCard h4:first-child {
+    margin-right: var(--gap-sm);
+}
+
+.RecommendationCard p {
+    margin: var(--gap) 0 0 0;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--sumi);
+}
+
+/* "Highlights:" and "Tip:" labels: */
+.RecommendationCard p:nth-of-type(2) {
+    margin-top: var(--gap-md);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+}
+
+.RecommendationCard ul {
+    margin: var(--gap-sm) 0 0 0;
+    padding-left: var(--gap);
+    list-style: none;
+}
+
+.RecommendationCard li {
+    position: relative;
+    padding-left: var(--gap);
+    margin-bottom: var(--gap-sm);
+    font-size: 14px;
+    color: var(--sumi);
+}
+
+/* A small square bullet instead of a dot: */
+.RecommendationCard li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 5px;
+    height: 5px;
+    background-color: var(--mizu);
+}
+
+/* The tip block, last two paragraphs: */
+.RecommendationCard p:last-of-type {
+    margin-top: var(--gap-sm);
+    padding: var(--gap-sm) var(--gap);
+    background-color: var(--mizu-pale);
+    font-size: 13px;
+    color: var(--ai-deep);
+}
+
+.RecommendationCard br { display: none; }

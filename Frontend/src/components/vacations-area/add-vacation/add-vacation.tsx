@@ -18,7 +18,7 @@ export function AddVacation() {
         try {
             await vacationService.addNewVacation(vacation);
             notify.success("Added new vacation");
-            navigate("/home");
+            navigate("/vacations");
         }
         catch(err: any) {
             notify.error(err);
@@ -46,7 +46,7 @@ export function AddVacation() {
                 <input type="number" {...register("price")} required min={0} max={10_000} step="0.01" />
 
                 <label>Cover Image:</label>
-                <input type="file" accept="image/*" {...register("image")}/>
+                <input type="file" accept="image/*" {...register("image")} required />
 
                 <button>Add</button>
             </form>

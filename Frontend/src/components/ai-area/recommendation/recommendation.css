@@ -1,3 +1,36 @@
 .Recommendation {
-	
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.Recommendation form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--gap-sm);
+    padding: var(--gap-md);
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+}
+
+.Recommendation form label {
+    flex-basis: 100%;
+    margin-bottom: var(--gap-sm);
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-transform: none;
+    color: var(--sumi);
+}
+
+.Recommendation form input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.Recommendation h3 {
+    margin-top: var(--gap-lg);
+    padding-bottom: var(--gap-sm);
+    border-bottom: 2px solid var(--mizu);
+    font-size: 20px;
 }

@@ -1,0 +1,25 @@
+.Menu {
+    display: flex;
+    gap: var(--gap-md);
+    flex-wrap: wrap;
+}
+
+.Menu a {
+    padding: 14px 0;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+    border-bottom: 2px solid transparent;
+}
+
+.Menu a:hover {
+    color: var(--sumi);
+    border-bottom-color: var(--line-strong);
+}
+
+/* react-router marks the current route with .active: */
+.Menu a.active {
+    color: var(--ai);
+    border-bottom-color: var(--ai);
+}

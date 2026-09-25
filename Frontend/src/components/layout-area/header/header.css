@@ -1,0 +1,19 @@
+.Header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sumi);
+}
+
+/* A small red square before the title - a hanko seal mark: */
+.Header h1::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 12px;
+    background-color: var(--sakura);
+    vertical-align: middle;
+}

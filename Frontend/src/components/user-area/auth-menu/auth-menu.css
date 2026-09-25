@@ -1,3 +1,28 @@
-.AuthMenu {
-	
+.AuthMenu > div {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    font-size: 13px;
+    color: var(--sumi-soft);
+}
+
+.AuthMenu a {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+}
+
+/* The sign-out button is secondary furniture, not a call to action: */
+.AuthMenu button {
+    padding: 5px 14px;
+    background-color: transparent;
+    border: 1px solid var(--line-strong);
+    color: var(--sumi-soft);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+}
+
+.AuthMenu button:hover:not(:disabled) {
+    background-color: var(--cream-deep);
+    border-color: var(--sakura);
+    color: var(--sakura);
 }

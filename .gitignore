@@ -7,3 +7,4 @@ Project3.docx.pdf
 Database/
 src/*/*.test.ts
 .mocharc.json
+.vscode/

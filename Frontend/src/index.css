@@ -1,0 +1,197 @@
+/* =====================================================================
+   Design system
+   Japanese-inspired: cream paper, muted indigo (ai), soft blues.
+   Square corners everywhere, hairline borders, generous whitespace.
+   ===================================================================== */
+
+:root {
+
+    /* Paper and ink */
+    --cream:        #faf7f0;
+    --cream-deep:   #f2ece0;
+    --paper:        #fffdf8;
+    --sumi:         #2b2b2b;   /* sumi ink - primary text */
+    --sumi-soft:    #6b6862;   /* secondary text */
+
+    /* Blues */
+    --ai:           #3c5a78;   /* indigo, primary accent */
+    --ai-deep:      #2a4058;
+    --mizu:         #a8c5d6;   /* water blue */
+    --mizu-pale:    #dce9f0;
+
+    /* Support */
+    --sakura:       #c96a6a;   /* muted red, destructive + hearts */
+    --matcha:       #7d9471;   /* muted green, success */
+    --line:         #ddd6c8;   /* hairline border */
+    --line-strong:  #c4bba8;
+
+    /* Rhythm */
+    --gap-xs:  4px;
+    --gap-sm:  8px;
+    --gap:     16px;
+    --gap-md:  24px;
+    --gap-lg:  40px;
+    --gap-xl:  64px;
+
+    --shadow:      0 1px 2px rgba(43, 43, 43, 0.06);
+    --shadow-lift: 0 4px 16px rgba(43, 43, 43, 0.10);
+
+    --ease: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--sumi);
+    font-family: "Helvetica Neue", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------------------
+   Typography - light weights and wide letter spacing read as "quiet"
+   --------------------------------------------------------------------- */
+
+h1, h2, h3, h4 {
+    margin: 0 0 var(--gap) 0;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+}
+
+h1 { font-size: 26px; }
+h2 { font-size: 21px; }
+h3 { font-size: 17px; }
+h4 { font-size: 15px; }
+
+p { margin: 0 0 var(--gap) 0; }
+
+a {
+    color: var(--ai);
+    text-decoration: none;
+    border-bottom: 1px solid var(--mizu);
+    transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+a:hover {
+    color: var(--ai-deep);
+    border-bottom-color: var(--ai);
+}
+
+/* ---------------------------------------------------------------------
+   Forms - square, hairline, no rounding anywhere
+   --------------------------------------------------------------------- */
+
+input, textarea, select, button {
+    font-family: inherit;
+    font-size: 14px;
+    border-radius: 0;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="file"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--sumi);
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--ai);
+    box-shadow: 0 0 0 3px var(--mizu-pale);
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+label {
+    display: block;
+    margin-bottom: var(--gap-xs);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+}
+
+/* ---------------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------------- */
+
+button {
+    padding: 10px 22px;
+    background-color: var(--ai);
+    border: 1px solid var(--ai);
+    color: var(--paper);
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease),
+                border-color 0.2s var(--ease),
+                transform 0.1s var(--ease);
+}
+
+button:hover:not(:disabled) {
+    background-color: var(--ai-deep);
+    border-color: var(--ai-deep);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+button:disabled {
+    background-color: transparent;
+    border-color: var(--line);
+    color: var(--line-strong);
+    cursor: default;
+}
+
+/* A quieter button - used for filters, pagination, card actions */
+.ghost-button {
+    background-color: transparent;
+    border-color: var(--line-strong);
+    color: var(--sumi);
+}
+
+.ghost-button:hover:not(:disabled) {
+    background-color: var(--mizu-pale);
+    border-color: var(--ai);
+    color: var(--ai-deep);
+}
+
+/* ---------------------------------------------------------------------
+   Shared page furniture
+   --------------------------------------------------------------------- */
+
+/* A bordered sheet of paper - forms and panels sit on these */
+.panel {
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    padding: var(--gap-md);
+    box-shadow: var(--shadow);
+}
+
+/* A narrow centered column, for forms */
+.narrow {
+    max-width: 420px;
+    margin: 0 auto;
+}

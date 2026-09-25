@@ -1,0 +1,91 @@
+/* The page still carries the class "Home" in the JSX: */
+.Home .admin-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--gap);
+}
+
+/* ---- Filter bar ---- */
+
+.Home .vacation-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+    padding-bottom: var(--gap-md);
+    margin-bottom: var(--gap-md);
+    border-bottom: 1px solid var(--line);
+}
+
+.Home .vacation-filters button {
+    padding: 8px 18px;
+    background-color: transparent;
+    border: 1px solid var(--line-strong);
+    color: var(--sumi-soft);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.Home .vacation-filters button:hover:not(:disabled) {
+    background-color: var(--mizu-pale);
+    border-color: var(--ai);
+    color: var(--ai-deep);
+}
+
+/* ---- Card grid: 3 across on desktop, 9 per page ---- */
+
+.Home .vacations-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap-md);
+}
+
+@media (max-width: 950px) {
+    .Home .vacations-container { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 620px) {
+    .Home .vacations-container { grid-template-columns: 1fr; }
+}
+
+/* ---- Pagination ---- */
+
+.Home .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-xs);
+    margin-top: var(--gap-lg);
+    padding-top: var(--gap-md);
+    border-top: 1px solid var(--line);
+}
+
+.Home .pagination button {
+    min-width: 40px;
+    padding: 8px 14px;
+    background-color: transparent;
+    border: 1px solid var(--line);
+    color: var(--sumi-soft);
+    font-size: 13px;
+}
+
+.Home .pagination button:hover:not(:disabled) {
+    background-color: var(--paper);
+    border-color: var(--ai);
+    color: var(--ai);
+}
+
+/* The current page is disabled - make that read as "selected", not "dead": */
+.Home .pagination button:disabled {
+    background-color: var(--ai);
+    border-color: var(--ai);
+    color: var(--paper);
+}
+
+/* ...except the Previous / Next ends, which really are unavailable: */
+.Home .pagination button:first-child:disabled,
+.Home .pagination button:last-child:disabled {
+    background-color: transparent;
+    border-color: var(--line);
+    color: var(--line-strong);
+}

@@ -39,7 +39,7 @@ export function EditVacation() {
         try {
             await vacationService.updateVacation(vacation, vacationId);
             notify.success(`vacation: ${vacation.destination} was updated`);
-            navigate("/home");
+            navigate("/vacations");
         }
         catch(err: any) {
             notify.error(err);

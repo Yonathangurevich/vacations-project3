@@ -1,3 +1,129 @@
 .VacationCard {
-	
+    display: flex;
+    flex-direction: column;
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.VacationCard:hover {
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-2px);
+}
+
+/* ---- Image block: photo, destination band, action buttons ---- */
+
+.VacationCard .vacation-image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: var(--cream-deep);
+}
+
+.VacationCard .vacation-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s var(--ease);
+}
+
+.VacationCard:hover .vacation-image img {
+    transform: scale(1.04);
+}
+
+/* Destination sits over the photo on a translucent band: */
+.VacationCard .vacation-destination {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: var(--gap-sm) var(--gap);
+    background: linear-gradient(to top, rgba(43, 43, 43, 0.72), transparent);
+}
+
+.VacationCard .vacation-destination h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: #fff;
+}
+
+/* Like / edit / delete live in the top-right corner: */
+.VacationCard .vacation-actions {
+    position: absolute;
+    top: var(--gap-sm);
+    right: var(--gap-sm);
+    display: flex;
+    gap: var(--gap-xs);
+}
+
+.VacationCard .vacation-actions button {
+    padding: 6px 12px;
+    background-color: rgba(255, 253, 248, 0.92);
+    border: 1px solid transparent;
+    color: var(--sumi);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(4px);
+}
+
+.VacationCard .vacation-actions button:hover:not(:disabled) {
+    background-color: var(--paper);
+    border-color: var(--ai);
+    color: var(--ai-deep);
+}
+
+/* Delete is the only destructive action on the card: */
+.VacationCard .vacation-actions button:last-child:hover:not(:disabled) {
+    border-color: var(--sakura);
+    color: var(--sakura);
+}
+
+/* ---- Dates ---- */
+
+.VacationCard .vacation-dates {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    padding: var(--gap-sm) var(--gap);
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--sumi-soft);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---- Description + price ---- */
+
+.VacationCard .vacation-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: var(--gap);
+}
+
+.VacationCard .vacation-info p {
+    flex: 1;
+    margin: 0 0 var(--gap) 0;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--sumi-soft);
+
+    /* Keep every card the same height regardless of description length: */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.VacationCard .vacation-price {
+    align-self: flex-start;
+    padding-top: var(--gap-sm);
+    border-top: 2px solid var(--mizu);
+    font-size: 19px;
+    letter-spacing: 0.04em;
+    color: var(--ai-deep);
+    font-variant-numeric: tabular-nums;
 }

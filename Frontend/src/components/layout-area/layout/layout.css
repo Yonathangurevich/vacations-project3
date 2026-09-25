@@ -1,0 +1,50 @@
+/* Header / nav / main / footer stacked, footer pinned to the bottom
+   even on short pages: */
+.Layout {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    min-height: 100%;
+}
+
+.Layout > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap);
+    padding: var(--gap) var(--gap-lg);
+    background-color: var(--paper);
+    border-bottom: 1px solid var(--line);
+}
+
+.Layout > nav {
+    padding: 0 var(--gap-lg);
+    background-color: var(--paper);
+    border-bottom: 1px solid var(--line);
+}
+
+.Layout > main {
+    padding: var(--gap-lg);
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.Layout > footer {
+    padding: var(--gap-md) var(--gap-lg);
+    border-top: 1px solid var(--line);
+}
+
+@media (max-width: 700px) {
+
+    .Layout > header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--gap-sm);
+        padding: var(--gap) var(--gap);
+    }
+
+    .Layout > nav,
+    .Layout > footer { padding-left: var(--gap); padding-right: var(--gap); }
+
+    .Layout > main { padding: var(--gap-md) var(--gap); }
+}

@@ -16,7 +16,7 @@ export function Routing() {
         <Routes>
 
             {/* Default Route: */}
-            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/" element={<Navigate to="/vacations" />} />
 
             {/* Home: */}
             <Route path="/vacations" element={<Vacations />} />

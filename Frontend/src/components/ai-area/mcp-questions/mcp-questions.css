@@ -1,3 +1,37 @@
 .McpQuestions {
-	
+    max-width: 780px;
+    margin: 0 auto;
+    padding: var(--gap-md);
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+}
+
+.McpQuestions h3 {
+    margin-bottom: var(--gap-md);
+    font-size: 19px;
+}
+
+.McpQuestions label {
+    margin-bottom: var(--gap-sm);
+}
+
+.McpQuestions button {
+    margin-top: var(--gap);
+}
+
+.McpQuestions hr {
+    margin: var(--gap-md) 0;
+    border: none;
+    border-top: 1px solid var(--line);
+}
+
+.McpQuestions br { display: none; }
+
+/* The answer is a plain string with real newlines in it - pre-wrap keeps
+   those line breaks while still wrapping long lines: */
+.McpQuestions > :last-child {
+    white-space: pre-wrap;
+    font-size: 14px;
+    line-height: 1.8;
 }
