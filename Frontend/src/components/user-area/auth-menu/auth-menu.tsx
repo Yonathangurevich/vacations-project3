@@ -12,7 +12,7 @@ export function AuthMenu() {
 
     function signOut() {
         userService.logout();
-        navigate("/home");
+        navigate("/vacations");
     }
 
     return (

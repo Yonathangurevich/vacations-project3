@@ -6,7 +6,7 @@ class VacationRecommendationService {
 
     // get AI recommendation:
     public async getRecommendation(destination: string): Promise<AiRecommendationModel> {
-        destination.trim();
+        destination = destination.trim();
         const response = await axios.post<AiRecommendationModel>(appConfig.aiRecommendationUrl, { destination });
         const recommendation = response.data;
         return recommendation;

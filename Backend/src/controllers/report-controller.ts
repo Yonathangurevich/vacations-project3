@@ -16,7 +16,7 @@ class ReportController {
         // get vacation reports
         const report = await reportService.getVacationReport();
         
-        // return reponse
+        // return response
         response.json(report);
     }
 

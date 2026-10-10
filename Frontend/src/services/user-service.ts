@@ -10,14 +10,20 @@ class UserService {
 	
     public constructor() {
 
-        // Get token from local storage:
-        const token = localStorage.getItem("token");
+        try {
 
-        // If we have token - save user in global state:
-        if (token) {
-            const dbUser = jwtDecode<{ user: UserModel }>(token).user;
-            const action = userSlice.actions.initUser(dbUser);
-            store.dispatch(action);
+            // Get token from local storage:
+            const token = localStorage.getItem("token");
+    
+            // If we have token - save user in global state:
+            if (token) {
+                const dbUser = jwtDecode<{ user: UserModel }>(token).user;
+                const action = userSlice.actions.initUser(dbUser);
+                store.dispatch(action);
+            }
+        }
+        catch(err: any) {
+            throw new Error("You'r not logged in!");
         }
 
     }

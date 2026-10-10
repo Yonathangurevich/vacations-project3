@@ -66,14 +66,14 @@ const BaseVacationSchema = z.object({
     vacationId: z.number().int().positive().optional(),
     destination: z.string().min(2).max(30),
     description: z.string().min(2).max(1000),
-    startDate: z.string().min(2).max(20),
-    endDate: z.string().min(2).max(20),
+    startDate: z.string().min(2).max(20).regex(/^\d{4}-\d{2}-\d{2}$/),
+    endDate: z.string().min(2).max(20).regex(/^\d{4}-\d{2}-\d{2}$/),
     price: z.number().min(0).max(10_000),
     imageName: z.string().min(1).max(255).optional(),
     image: z.custom<UploadedFile>().optional(),
 });
 
-// check if endDate bigger or equal to startEnd
+// check if endDate bigger or equal to startDate
 const endAfterStart = (data: IVacationsFormModel) => data.endDate >= data.startDate;
 const endAfterStartMessage = { message: "End date must not be before start date", path: ["endDate"] };
 
@@ -86,10 +86,10 @@ const AddVacationSchema = BaseVacationSchema
         path: ["startDate"]
     })
 
-    // check if endDate bigger or equal to startEnd
+    // check if endDate bigger or equal to startDate
     .refine(endAfterStart, endAfterStartMessage)
     
-    // check if image was sended
+    // check if image was sent
     .refine(data => !!data.image, {
         message: "Image is required",
         path: ["image"]
@@ -98,7 +98,7 @@ const AddVacationSchema = BaseVacationSchema
 // Edit vacation refine validation
 const EditVacationSchema = BaseVacationSchema
 
-    // check if endDate bigger or equal to startEnd
+    // check if endDate bigger or equal to startDate
     .refine(endAfterStart, endAfterStartMessage);
 
 // Vacation Interface:

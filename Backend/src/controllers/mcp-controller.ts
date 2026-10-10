@@ -1,7 +1,6 @@
 import express, { Request, Response, Router } from "express";
 import { securityMiddleware } from "../middleware/security-middleware";
 import { McpQuestionModel } from "../models/vacation-mcp-model";
-import { vacationMcpServer } from "../services/mcp-server";
 import { mcpGptService } from "../services/mcp-gpt-service";
 
 class McpController {

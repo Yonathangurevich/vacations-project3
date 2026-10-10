@@ -5,16 +5,17 @@ import { VacationFormModel } from "../../../models/vacation-model";
 import { vacationService } from "../../../services/vacation-service";
 import { notify } from "../../../utils/notify";
 import "./edit-vacation.css";
-import { useAdmin } from "../../../hooks/use-admin";
 
 export function EditVacation() {
     
-    useAdmin();
 
     const params = useParams()
     const vacationId: number = +params.vacationId!;
-    const {register, handleSubmit, reset} = useForm<VacationFormModel>()
+    const {register, handleSubmit, reset, watch} = useForm<VacationFormModel>()
     const navigate = useNavigate();
+
+    // get startDate value:
+    const startDate = watch("startDate");
 
     const [imageUrl, setImageUrl] = useState<string>("");
 
@@ -32,13 +33,19 @@ export function EditVacation() {
                 
                 setImageUrl(vacation.imageUrl);
             })
-            .catch(err => notify.error(err));
+            .catch(err => {
+                notify.error(err);
+                if (err.response.status !== 404) {
+                    navigate("/vacations");
+                }
+                navigate("/404");
+            });
     }, [vacationId, reset]);
     
     async function send(vacation: VacationFormModel) {
         try {
             await vacationService.updateVacation(vacation, vacationId);
-            notify.success(`vacation: ${vacation.destination} was updated`);
+            notify.success(`Vacation: ${vacation.destination} was updated`);
             navigate("/vacations");
         }
         catch(err: any) {
@@ -63,7 +70,7 @@ export function EditVacation() {
                 <input type="date"{...register("startDate")} required minLength={2} maxLength={20} />
 
                 <label>End On:</label>
-                <input type="date"{...register("endDate")} required minLength={2} maxLength={20} />
+                <input type="date"{...register("endDate")} required minLength={2} maxLength={20} min={startDate} />
 
                 <label>Price:</label>
                 <input type="number" {...register("price")} required min={0} max={10_000} step="0.01" />
@@ -75,7 +82,7 @@ export function EditVacation() {
 
                 <button>Update</button>
 
-                <NavLink to="/home">Back</NavLink>
+                <NavLink to="/vacations">Back</NavLink>
             </form>
 
 

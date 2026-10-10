@@ -47,10 +47,10 @@ class VacationsController {
         const vacationId = +request.params.vacationId;
         
         // get one vacation
-        const vacations = await vacationsService.getOneVacation(vacationId);
+        const vacation = await vacationsService.getOneVacation(vacationId);
         
         // send response
-        response.json(vacations);
+        response.json(vacation);
     }
 
     private async addVacation(request: Request, response: Response): Promise<void> {
@@ -144,7 +144,12 @@ class VacationsController {
 
         // get image name from params:
         const imageName = request.params.imageName.toString();
-        
+
+        // validate image uuid:
+        if (!/^[0-9a-f-]{36}\.(jpg|jpeg|png|gif|webp)$/i.test(imageName)) {
+            throw new ClientError(StatusCode.BadRequest, "Invalid image name");
+        }
+
         // get image file path:
         const filePath = saver.getFilePath(imageName);
 

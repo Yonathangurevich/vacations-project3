@@ -7,15 +7,13 @@ class GptService {
 
 	public async getCompletion(systemPrompt: string, userPrompt: string): Promise<string> {
 
-        // Asking for json_object makes the model return structurally valid
-        // JSON, instead of us hoping it obeys an instruction to do so:
         const body = {
             model: appConfig.openaiModel,
             messages: [
                 { role: "system", content: systemPrompt },
                 { role: "user", content: userPrompt }
             ],
-            response_format: { type: "json_object" }
+            response_format: { type: "json_object" },
         };
 
         const options = {
@@ -23,7 +21,7 @@ class GptService {
                 authorization: "Bearer " + appConfig.openaiApiKey
             },
             // timeout for the llm connection:
-            timeout: 100_000
+            timeout: 100_000,
         };
 
         try {
@@ -41,10 +39,10 @@ class GptService {
         }
         catch (err: any) {
 
-            // Our own error - let it through untouched:
+            // if any error is part of any ClientError:
             if (err instanceof ClientError) throw err;
 
-            // Anything else is the upstream service failing, not the client:
+            // Anything else is the upstream service failing:
             throw new ClientError(StatusCode.BadGateway, "The AI service is currently unavailable.");
         }
     }

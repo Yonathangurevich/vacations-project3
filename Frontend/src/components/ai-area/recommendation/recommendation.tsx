@@ -1,7 +1,6 @@
-import { useForm } from "react-hook-form";
 import "./recommendation.css";
 import { AiRecommendationModel } from "../../../models/ai-recommendation-model";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { vacationRecommendationService } from "../../../services/vacation-recommendation-service";
 import { notify } from "../../../utils/notify";
 import { Spinner } from "../../shared-area/spinner/spinner";
@@ -9,16 +8,30 @@ import { RecommendationCard } from "../recommendation-card/recommendation-card";
 import { useTokenExpiration } from "../../../hooks/use-token-expiration";
 
 export function Recommendation() {
-    
-    const {register, handleSubmit} = useForm<{destination: string}>();
-    const [recommendation, setRecommendation] = useState<AiRecommendationModel>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    useTokenExpiration(localStorage.getItem("token"));
 
-    async function send(destination: {destination: string}) {
+    const token = localStorage.getItem("token");
+    useTokenExpiration(token);
+
+    // store user input:
+    const [destination, setDestination] = useState<string>("");
+    
+    // store ai recommendations:
+    const [recommendation, setRecommendation] = useState<AiRecommendationModel>();
+    
+    // set spinner to on or off:
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    // get user destination:
+    function putDestination(event: ChangeEvent<HTMLInputElement>): void {
+        const destination = event.target.value;
+        setDestination(destination);
+    }
+
+    // send the users destination to LLM:
+    async function send() {
         try {
-            setIsLoading(true)
-            const recommendation = await vacationRecommendationService.getRecommendation(destination.destination);
+            setIsLoading(true);
+            const recommendation = await vacationRecommendationService.getRecommendation(destination);
             setRecommendation(recommendation);
         }
         catch(err: any) {
@@ -32,11 +45,8 @@ export function Recommendation() {
     return (
         <div className="Recommendation">
 
-            <form onSubmit={handleSubmit(send)}>
-                <label>AI Recommendation</label>
-                <input type="text" {...register("destination")} minLength={2} maxLength={30} required />
-                <button>Send</button>
-            </form>
+            <input type="text" onChange={putDestination} />
+            <button onClick={send}>Send</button>
 
             {isLoading && <Spinner />}
 

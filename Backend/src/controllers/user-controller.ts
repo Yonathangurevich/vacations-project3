@@ -1,9 +1,8 @@
 import express, { Request, Response, Router } from "express";
+import { CredentialsModel } from "../models/credentials-model";
+import { StatusCode } from "../models/enums";
 import { UserModel } from "../models/user-model";
 import { userService } from "../services/user-service";
-import { StatusCode } from "../models/enums";
-import { CredentialsModel } from "../models/credentials-model";
-import { securityMiddleware } from "../middleware/security-middleware";
 
 class UserController {
 
@@ -14,9 +13,6 @@ class UserController {
     public constructor() {
         this.router.post("/api/register", this.addUser);
         this.router.post("/api/login", this.login);
-
-        // get all users emails only if admin
-        this.router.get("/api/users", securityMiddleware.verifyAdmin, this.getAllUsersEmails);
     }
 
     // Add user:
@@ -31,12 +27,6 @@ class UserController {
         const credentials = new CredentialsModel(request.body);
         const token = await userService.login(credentials);
         response.json(token);
-    }
-
-    // get all users emails
-    private async getAllUsersEmails(request: Request, response: Response): Promise<void> {
-        const users = await userService.getAllUsersEmails();
-        response.json(users);
     }
 }
 

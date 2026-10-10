@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTokenExpiration } from "../../../hooks/use-token-expiration";
 import { VacationLikesCountModel } from "../../../models/vacation-model";
 import { vacationService } from "../../../services/vacation-service";
 import { notify } from "../../../utils/notify";
@@ -14,10 +13,6 @@ import { UserModel } from "../../../models/user-model";
 type VacationFilter = "all" | "liked" | "active" | "notStarted";
 
 export function Vacations() {
-
-    // Check token expiration:
-    const token = localStorage.getItem("token");
-    useTokenExpiration(token);
 
     const user = useSelector<AppState, UserModel>(state => state.user);
 
@@ -45,7 +40,7 @@ export function Vacations() {
         vacationService.getAllVacations()
             .then(vacations => setVacations(vacations))
             .catch(err => notify.error(err));          
-    }, []);
+    }, [user]);
         
     // Get today's date:
     const today = new Date().toLocaleDateString("sv-SE");
@@ -116,7 +111,7 @@ export function Vacations() {
     }, [currentPage, totalPages]);
 
     return (
-        <div className="Home">
+        <div className="Vacations">
 
             {isAdmin &&
                 <div className="admin-actions">
@@ -169,7 +164,7 @@ export function Vacations() {
                     Previous
                 </button>
 
-
+                {/* create array of totalPages and start from 1 */}
                 {Array.from(
                     { length: totalPages },
                     (_, index) => index + 1

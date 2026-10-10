@@ -7,8 +7,14 @@ class LoggerMiddleware {
     public logToConsole(request: Request, response: Response, next: NextFunction): void {
         const method = request.method;
         const route = request.originalUrl;
-        const body = request.body ? JSON.stringify(request.body) : null;
-        console.log(colors.green(`${method} ${route} | body: ${body}`));
+        const body = request.body ?? null;
+        
+        // Create a copy of the body with the masked password if it exists
+        const safeBody = body?.password 
+            ? { ...body, password: "*".repeat(body.password.length) } 
+            : body;
+        console.log(colors.green(`${method} ${route} | body: ${safeBody ? JSON.stringify(safeBody) : 'null'}`));
+
         next(); // Continue to next middleware / controller
     }
 

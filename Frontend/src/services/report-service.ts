@@ -10,7 +10,7 @@ class ReportService {
         return reports; 
     }
 
-    public async getCsvReport(): Promise<void> {
+    public async getCSVReport(): Promise<void> {
         
         const response = await axios.get<string>(appConfig.reportUrl + "/csv", {
             responseType: "blob"

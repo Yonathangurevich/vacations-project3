@@ -18,8 +18,6 @@ export function Menu() {
             {isAdmin && <NavLink to="/reports">Reports</NavLink>}
             {user && <NavLink to="/recommendation">AI Recommendation</NavLink>}
             {user && <NavLink to="/mcp">MCP</NavLink>}
-            
-            <NavLink to="/about">About</NavLink>
 
         </div>
     );

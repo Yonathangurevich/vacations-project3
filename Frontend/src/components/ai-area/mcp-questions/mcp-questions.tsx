@@ -7,11 +7,13 @@ import { Spinner } from "../../shared-area/spinner/spinner";
 import { useTokenExpiration } from "../../../hooks/use-token-expiration";
 
 export function McpQuestions() {
+
+    const token = localStorage.getItem("token");
+    useTokenExpiration(token);
     
     const [question, setQuestion] = useState<McpModel>({ question: "" });
     const [answer, setAnswer] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    useTokenExpiration(localStorage.getItem("token"));
 
     const textAreaId = useId();
 

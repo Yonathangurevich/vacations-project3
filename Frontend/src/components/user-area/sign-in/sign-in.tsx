@@ -20,7 +20,7 @@ export function SignIn() {
     async function send(credential:CredentialModel) {
         try {
             await userService.login(credential);
-            notify.success("welcome back");
+            notify.success("Welcome back!");
             navigate("/vacations");
         }
         catch(err: any) {
@@ -40,7 +40,7 @@ export function SignIn() {
                 
                 <button>Sign In</button>
 
-                <label htmlFor={registerId}>don't have account?</label>
+                <label htmlFor={registerId}>Don't have an account?</label>
                 <NavLink id={registerId} to={"/signup"} >register now</NavLink>
             </form>
 

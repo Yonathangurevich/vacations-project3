@@ -5,19 +5,26 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Roles } from "../models/enums";
 import { notify } from "../utils/notify";
+import { userService } from "../services/user-service";
 
 // Custom hook for checking if user is Admin:
 export function useAdmin(): void {
 
     const user = useSelector<AppState, UserModel>(state => state.user);
-    
     const navigate = useNavigate();
+
+    // get token
+    const token = localStorage.getItem("token");
+    
+    // check if user got token and also admin:
+    const isAdmin = !!token && user?.roleId === Roles.Admin;
     
     useEffect(() => {
-        if (user?.roleId !== Roles.Admin) {
+        if (!isAdmin) {
+            userService.logout();
             notify.error("You are not authorized!");
-            navigate("/signin");
+            navigate("/signin", { replace: true });
         }
-    }, [user, navigate]);
+    }, [isAdmin, navigate]);
 
 }

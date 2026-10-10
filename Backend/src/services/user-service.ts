@@ -84,21 +84,6 @@ class UserService {
         return !!user;
     }
 
-    // get all users emails
-    public async getAllUsersEmails(): Promise<string[]> {
-        
-        // sql query
-        const sql = "select * from users";
-
-        // execute:
-        const dbUsers = await dal.execute(sql) as UserModel[];
-        
-        // get only emails:
-        const users = dbUsers.map(u => u.email);
-        
-        return users;
-    }
-
 }
 
 export const userService = new UserService();

@@ -1,0 +1,476 @@
+{
+  "info": {
+    "name": "project3-vacations",
+    "description": null,
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "login",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/login",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "login"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@vacations.com\",\n  \"password\": \"admin1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "vacations",
+      "item": [
+        {
+          "name": "add new vacation",
+          "request": {
+            "method": "post",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MSwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IklzdHJhdG9yIiwiZW1haWwiOiJhZG1pbkB2YWNhdGlvbnMuY29tIiwicm9sZUlkIjoxfSwiaWF0IjoxNzg4NTkyMTMyLCJleHAiOjE3ODg2MDI5MzJ9.xaZuypW88OomL0rwl8TogYmMwG9Bua7twdipPE5be78",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/vacations",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "vacations"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "destination",
+                  "disabled": false,
+                  "type": "text",
+                  "description": "",
+                  "value": "Test"
+                },
+                {
+                  "key": "description",
+                  "disabled": false,
+                  "type": "text",
+                  "description": "",
+                  "value": "Some Random place in the galaxy."
+                },
+                {
+                  "key": "startDate",
+                  "disabled": false,
+                  "type": "text",
+                  "description": "",
+                  "value": "2027-03-12"
+                },
+                {
+                  "key": "endDate",
+                  "disabled": false,
+                  "type": "text",
+                  "description": "",
+                  "value": "2027-03-19"
+                },
+                {
+                  "key": "price",
+                  "disabled": false,
+                  "type": "text",
+                  "description": "",
+                  "value": "1450"
+                },
+                {
+                  "key": "image",
+                  "disabled": false,
+                  "type": "file",
+                  "description": "",
+                  "src": "/C:/Users/user/Downloads/randomGalaxy.jpg"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "delete vacation",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/vacations/15",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "vacations",
+                "15"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "get all vacations",
+          "request": {
+            "method": "get",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MSwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IklzdHJhdG9yIiwiZW1haWwiOiJhZG1pbkB2YWNhdGlvbnMuY29tIiwicm9sZUlkIjoxfSwiaWF0IjoxNzg5NzMxNTkzLCJleHAiOjE3ODk3NDIzOTN9.gKcxXzieU5KXB6JIxbHdVwwTCyHc6GC1RvFOiEWnnxo",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/vacations",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "vacations"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "get one vacation",
+          "request": {
+            "method": "get",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MSwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IklzdHJhdG9yIiwiZW1haWwiOiJhZG1pbkB2YWNhdGlvbnMuY29tIiwicm9sZUlkIjoxfSwiaWF0IjoxNzg5MjAyNTkzLCJleHAiOjE3ODkyMTMzOTN9._oskc0k0veZeizVaSkylWMF2h9iG-KMmnQMhKmGuox8",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/vacations/1",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "vacations",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "get one image vacation",
+          "request": {
+            "method": "get",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MSwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IklzdHJhdG9yIiwiZW1haWwiOiJhZG1pbkB2YWNhdGlvbnMuY29tIiwicm9sZUlkIjoxfSwiaWF0IjoxNzg5MTA3MzI1LCJleHAiOjE3ODkxMTgxMjV9.yNeUAh1bXOXAq0IquGZZnXRxXWATQ1RZdjQZb0lKB2Y",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/vacations/images/5a73e602-917e-4fdd-ac78-7ab233bb92b2.jpg",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "vacations",
+                "images",
+                "5a73e602-917e-4fdd-ac78-7ab233bb92b2.jpg"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "update vacation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MSwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IklzdHJhdG9yIiwiZW1haWwiOiJhZG1pbkB2YWNhdGlvbnMuY29tIiwicm9sZUlkIjoxfSwiaWF0IjoxNzg5MTA3MzI1LCJleHAiOjE3ODkxMTgxMjV9.yNeUAh1bXOXAq0IquGZZnXRxXWATQ1RZdjQZb0lKB2Y",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/vacations/3",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "vacations",
+                "3"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "destination",
+                  "disabled": false,
+                  "type": "text",
+                  "description": "",
+                  "value": "Santorini, Greece"
+                },
+                {
+                  "key": "description",
+                  "disabled": false,
+                  "type": "text",
+                  "description": "",
+                  "value": "Whitewashed villages perched over a flooded volcanic caldera. Sunset in Oia, a catamaran cruise to the hot springs, and wine tasting at an Assyrtiko vineyard in Pyrgos."
+                },
+                {
+                  "key": "startDate",
+                  "disabled": false,
+                  "type": "text",
+                  "description": "",
+                  "value": "2026-06-20"
+                },
+                {
+                  "key": "endDate",
+                  "disabled": false,
+                  "type": "text",
+                  "description": "",
+                  "value": "2026-06-27"
+                },
+                {
+                  "key": "price",
+                  "disabled": false,
+                  "type": "text",
+                  "description": "",
+                  "value": "1890.00"
+                },
+                {
+                  "key": "image",
+                  "disabled": false,
+                  "type": "file",
+                  "description": "",
+                  "src": "C:\\Users\\user\\Downloads\\Santorini-Greece.jpg",
+                  "contentType": "image/jpeg"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI",
+      "item": [
+        {
+          "name": "recommendations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MSwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IklzdHJhdG9yIiwiZW1haWwiOiJhZG1pbkB2YWNhdGlvbnMuY29tIiwicm9sZUlkIjoxfSwiaWF0IjoxNzg5NDg0NDQyLCJleHAiOjE3ODk0OTUyNDJ9.mHxkyWbAORUQoqMsNmTPVlVvuFafKwuwHYN2UzpMdSs",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/ai/recommendations",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "ai",
+                "recommendations"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \n  \"destination\": \"Rome\" \n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "mcp server",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MSwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IklzdHJhdG9yIiwiZW1haWwiOiJhZG1pbkB2YWNhdGlvbnMuY29tIiwicm9sZUlkIjoxfSwiaWF0IjoxNzg5NzMxNTkzLCJleHAiOjE3ODk3NDIzOTN9.gKcxXzieU5KXB6JIxbHdVwwTCyHc6GC1RvFOiEWnnxo",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/mcp/vacations",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "mcp",
+                "vacations"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"Which future vacations exist for European countries?\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "reports",
+      "item": [
+        {
+          "name": "get csv",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/report/csv",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "report",
+                "csv"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "get vacation report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:4000/api/report",
+              "protocol": "http",
+              "host": [
+                "localhost:4000"
+              ],
+              "path": [
+                "api",
+                "report"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": []
+}

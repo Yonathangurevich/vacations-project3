@@ -16,12 +16,11 @@ class AppConfig {
     public readonly mysqlDatabase = process.env.MYSQL_DATABASE!;
     public readonly jwtSecret = process.env.JWT_SECRET!;
     public readonly hashSalt = process.env.HASH_SALT!;
-    public readonly recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY!;
 
     public readonly vacationImagesBaseUrl = process.env.VACATION_IMAGES_BASE_URL!;
 
     public readonly openaiApiKey = process.env.OPENAI_API_KEY!;
-    public readonly openaiModel = "gpt-5";
+    public readonly openaiModel = "gpt-4o";
     public readonly openaiUrl = "https://api.openai.com/v1/chat/completions";
 
     public readonly mcpServerUrl = process.env.MCP_SERVER_URL!;

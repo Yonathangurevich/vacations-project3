@@ -11,11 +11,11 @@ export function SignUp() {
     const { register, handleSubmit } = useForm<UserModel>();
     const navigate = useNavigate();
 
-    const firstName = useId();
-    const lastName = useId();
-    const email = useId();
-    const password = useId();
-    const loginId =useId();
+    const firstNameId = useId();
+    const lastNameId = useId();
+    const emailId = useId();
+    const passwordId = useId();
+    const loginIdId =useId();
 
     async function send(user: UserModel) {
         try {
@@ -32,22 +32,22 @@ export function SignUp() {
         <div className="SignUp">
 
 			<form onSubmit={handleSubmit(send)}>
-                <label htmlFor={firstName}>first name: </label>
-                <input id={firstName} type="text" {...register("firstName")} minLength={2} maxLength={30} required />
+                <label htmlFor={firstNameId}>First name: </label>
+                <input id={firstNameId} type="text" {...register("firstName")} minLength={2} maxLength={30} required />
 
-                <label htmlFor={lastName}>last name: </label>
-                <input id={lastName} type="text" {...register("lastName")} minLength={2} maxLength={50} required />
+                <label htmlFor={lastNameId}>Last name: </label>
+                <input id={lastNameId} type="text" {...register("lastName")} minLength={2} maxLength={50} required />
                 
-                <label htmlFor={email}>email: </label>
-                <input id={email} type="email" {...register("email")} minLength={2} maxLength={100} required />
+                <label htmlFor={emailId}>Email: </label>
+                <input id={emailId} type="email" {...register("email")} minLength={2} maxLength={100} required />
                 
-                <label htmlFor={password}>password: </label>
-                <input id={password} type="password" {...register("password")} minLength={4} maxLength={40} required />
+                <label htmlFor={passwordId}>Password: </label>
+                <input id={passwordId} type="password" {...register("password")} minLength={4} maxLength={40} required />
 
                 <button>Register</button>
 
-                <label htmlFor={loginId}>already a member?</label>
-                <NavLink id={loginId} to={"/signin"} >login</NavLink>
+                <label htmlFor={loginIdId}>Already a member?</label>
+                <NavLink id={loginIdId} to={"/signin"}>Sign in</NavLink>
             </form>
 
         </div>

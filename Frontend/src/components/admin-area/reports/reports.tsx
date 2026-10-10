@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import "./reports.css";
 import { ReportModel } from "../../../models/report-model";
 import { reportService } from "../../../services/report-service";
 import { notify } from "../../../utils/notify";
 import { VacationReportChart } from "../vacation-report-chart/vacation-report-chart";
+import "./reports.css";
 import { useAdmin } from "../../../hooks/use-admin";
+
 
 export function Reports() {
 
@@ -18,9 +19,9 @@ export function Reports() {
             .catch(err => notify.error(err));
     }, []);
 
-    async function downloadCsv(): Promise<void> {
+    async function downloadCSV(): Promise<void> {
         try {
-            await reportService.getCsvReport();
+            await reportService.getCSVReport();
             notify.success("CSV will start download now!");
         }
         catch(err: any) {
@@ -35,7 +36,7 @@ export function Reports() {
 
             <VacationReportChart reports={reports} />
 
-            <button onClick={downloadCsv}>Download Csv</button>
+            <button onClick={downloadCSV}>Download CSV</button>
         </div>
     );
 }

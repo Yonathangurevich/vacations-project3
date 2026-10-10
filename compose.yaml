@@ -1,0 +1,96 @@
+services:
+
+  # Mysql container:
+  mysql-service:
+
+    image: mysql:8
+    container_name: mysql-container
+    restart: unless-stopped
+
+    volumes:
+      - mysql-volume:/var/lib/mysql
+      - ./Database:/docker-entrypoint-initdb.d
+
+    environment:
+      MYSQL_DATABASE: vacations
+      MYSQL_ROOT_PASSWORD: Pa$$w0rd
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 25s
+
+#  -~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-
+# {                         BACKEND SERVICE                                       }
+#  -~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-
+
+  backend-service:
+
+    depends_on:
+      mysql-service:
+        condition: service_healthy
+
+    image: vacations-backend
+    build: ./Backend
+    container_name: vacations-backend
+    ports:
+      - 4000:4000
+
+    restart: unless-stopped
+
+    volumes:
+      - assets-volume:/app/src/assets
+
+    environment:
+      ENVIRONMENT: production
+      
+      MYSQL_HOST: mysql-service
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Pa$$w0rd
+      MYSQL_DATABASE: vacations
+      JWT_SECRET: We are going to rule the world!
+      HASH_SALT: The-Amazing-45800-7-Students!
+      VACATION_IMAGES_BASE_URL: http://localhost:4000/api/vacations/images/
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+
+    healthcheck:
+      test: ["CMD", "node", "--eval", "require('http').get('http://localhost:4000/ping', response => process.exit(response.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 25s
+
+#  -~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-
+# {                         FRONTEND SERVICE                                      }
+#  -~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-
+
+  frontend-service:
+
+    depends_on:
+      backend-service:
+        condition: service_healthy
+
+    image: vacations-frontend
+    build: ./Frontend
+    container_name: vacations-frontend
+    ports:
+      - 5173:5173
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "node", "--eval", "require('http').get('http://localhost:5173', response => process.exit(response.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 25s
+
+#  -~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-
+# {                                 VOLUMES                                       }
+#  -~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-
+
+volumes:
+  mysql-volume:
+  assets-volume:

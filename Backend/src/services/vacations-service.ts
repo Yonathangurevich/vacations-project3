@@ -64,14 +64,19 @@ class VacationsService {
         const info = await dal.execute(sql, values) as OkPacketParams;
 
         // get added vacation
-        const dbVacations = await this.getOneVacation(info.insertId!);
+        const dbVacation = await this.getOneVacation(info.insertId!);
 
         // return added vacation
-        return dbVacations;
+        return dbVacation;
     }
 
     public async getOneVacation(vacationId: number): Promise<VacationsModel> {
         
+        // validate vacationId
+        if (!Number.isInteger(vacationId) || vacationId < 1) {
+            throw new ClientError(StatusCode.BadRequest, "No vacation number was sended");
+        }
+
         // sql:
         const sql = "select * from vacations where vacationId = ?";
         const values = [vacationId];
@@ -81,7 +86,7 @@ class VacationsService {
 
         // throw on empty vacations
         if (vacations.length === 0) {
-            throw new ClientError(StatusCode.NotFound, "The vacation you're looking for doesn't exists or was deleted");
+            throw new ClientError(StatusCode.NotFound, "The vacation you're looking for doesn't exist");
         }
 
         const dbVacation = vacations[0];
@@ -127,6 +132,15 @@ class VacationsService {
 
     public async deleteVacation(vacationId: number): Promise<void> {
         
+        // validate vacationId
+        if (!Number.isInteger(vacationId) || vacationId < 1) {
+            throw new ClientError(StatusCode.BadRequest, "No vacation number was sended");
+        }
+
+        // Take image name:
+        const vacation = await this.getOneVacation(vacationId);
+        const oldImageName = vacation.imageName;
+
         // sql:
         const sql = "delete from vacations where vacationId = ?";
         const values = [vacationId];
@@ -136,12 +150,20 @@ class VacationsService {
 
         // check if vacation got deleted:
         if (info.affectedRows === 0) {
-            throw new ClientError(StatusCode.NotFound, "The vacation you trying to delete doesn't exist");
+            throw new ClientError(StatusCode.NotFound, "The vacation you're trying to delete doesn't exist");
         }
+
+        // Delete image: 
+        await saver.delete(oldImageName!);
 
     }
 
     public async likeVacation(vacationId: number, userId: number): Promise<void> {
+
+        // validate vacationId
+        if (!Number.isInteger(vacationId) || vacationId < 1) {
+            throw new ClientError(StatusCode.BadRequest, "No vacation number was sended");
+        }
 
         // sql:
         const sql = "insert into likes (userId, vacationId) values (?, ?)";
@@ -168,6 +190,11 @@ class VacationsService {
 
     public async unlikeVacation(vacationId: number, userId: number): Promise<void> {
 
+        // validate vacationId
+        if (!Number.isInteger(vacationId) || vacationId < 1) {
+            throw new ClientError(StatusCode.BadRequest, "No vacation positive number was sended");
+        }
+
         // sql:
         const sql = "delete from likes where userId = ? and vacationId = ?";
         const values = [userId, vacationId];
@@ -177,7 +204,7 @@ class VacationsService {
 
         // if the user never liked this vacation:
         if (info.affectedRows === 0) {
-            throw new ClientError(StatusCode.NotFound, "This vacation is not liked by the user");
+            throw new ClientError(StatusCode.NotFound, "This vacation never liked by the user");
         }
     }
 

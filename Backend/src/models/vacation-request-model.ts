@@ -2,12 +2,12 @@ import z from "zod";
 import { ClientError } from "./client-error";
 import { StatusCode } from "./enums";
 
-// User Schema:
+// Vacation Schema:
 const VacationRequestSchema = z.object({
     destination: z.string().min(2).max(40)
 });
 
-// User Interface (I = Interface):
+// Vacation Interface (I = Interface):
 type IVacationRequestModel = z.infer<typeof VacationRequestSchema>;
 
 export class VacationRequestModel implements IVacationRequestModel {

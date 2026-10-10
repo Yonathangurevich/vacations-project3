@@ -16,7 +16,7 @@ class PromptService {
         const userPrompt = `
             Write a vacation guide for ${vacation.destination}.
 
-            Organize it into 5 to 7 themed sections. A section is an experience or an
+            Organize it into 3 to 5 themed sections. A section is an experience or an
             area of the destination, not a single attraction - for example an old town,
             a stretch of coastline, the local food scene, a day trip, the nightlife.
 
@@ -33,6 +33,9 @@ class PromptService {
               a single string formatted as "Name - short explanation of what it is".
             - "tip": one practical piece of advice about timing, crowds, cost or
               getting around.
+            - If the destination is not a real place, 
+              reply with a JSON object containing an error field explaining that, 
+              and no sections.
 
             Reply with a JSON object shaped exactly like this:
             {

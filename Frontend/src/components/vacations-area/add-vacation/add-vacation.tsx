@@ -1,18 +1,21 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAdmin } from "../../../hooks/use-admin";
 import "./add-vacation.css";
 import { VacationFormModel } from "../../../models/vacation-model";
 import { notify } from "../../../utils/notify";
 import { vacationService } from "../../../services/vacation-service";
 
+
 export function AddVacation() {
 
-    // Admin only:
-    useAdmin();
 
-    const {register, handleSubmit} = useForm<VacationFormModel>();
+    // take form details and watch for startDate
+    const {register, handleSubmit, watch} = useForm<VacationFormModel>();
     const navigate = useNavigate();
+    const today = new Date().toLocaleDateString("sv-SE");
+    
+    // get startDate value:
+    const startDate = watch("startDate");
     
     async function send(vacation:VacationFormModel) {
         try {
@@ -37,10 +40,10 @@ export function AddVacation() {
                 <textarea {...register("description")} required minLength={2} maxLength={1000} />
 
                 <label>Start On:</label>
-                <input type="date"{...register("startDate")} required minLength={2} maxLength={20} />
+                <input type="date"{...register("startDate")} required minLength={2} maxLength={20} min={today} />
 
                 <label>End On:</label>
-                <input type="date"{...register("endDate")} required minLength={2} maxLength={20} />
+                <input type="date"{...register("endDate")} required minLength={2} maxLength={20} min={startDate} />
 
                 <label>Price:</label>
                 <input type="number" {...register("price")} required min={0} max={10_000} step="0.01" />

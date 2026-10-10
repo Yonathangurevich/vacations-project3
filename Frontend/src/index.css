@@ -21,7 +21,6 @@
 
     /* Support */
     --sakura:       #c96a6a;   /* muted red, destructive + hearts */
-    --matcha:       #7d9471;   /* muted green, success */
     --line:         #ddd6c8;   /* hairline border */
     --line-strong:  #c4bba8;
 
@@ -163,35 +162,4 @@ button:disabled {
     border-color: var(--line);
     color: var(--line-strong);
     cursor: default;
-}
-
-/* A quieter button - used for filters, pagination, card actions */
-.ghost-button {
-    background-color: transparent;
-    border-color: var(--line-strong);
-    color: var(--sumi);
-}
-
-.ghost-button:hover:not(:disabled) {
-    background-color: var(--mizu-pale);
-    border-color: var(--ai);
-    color: var(--ai-deep);
-}
-
-/* ---------------------------------------------------------------------
-   Shared page furniture
-   --------------------------------------------------------------------- */
-
-/* A bordered sheet of paper - forms and panels sit on these */
-.panel {
-    background-color: var(--paper);
-    border: 1px solid var(--line);
-    padding: var(--gap-md);
-    box-shadow: var(--shadow);
-}
-
-/* A narrow centered column, for forms */
-.narrow {
-    max-width: 420px;
-    margin: 0 auto;
 }

@@ -14,6 +14,7 @@ import { aiController } from "./controllers/ai-controller";
 import { vacationMcpServer } from "./services/mcp-server";
 import { sseHandlers } from "express-mcp-handler";
 import { mcpController } from "./controllers/mcp-controller";
+import { pingController } from "./controllers/ping-controller";
 
 class App {
 
@@ -37,6 +38,7 @@ class App {
         server.use(securityMiddleware.preventXss);
 
         // Register controllers:
+        server.use(pingController.router);
         server.use(userController.router);
         server.use(vacationsController.router);
         server.use(reportController.router);
